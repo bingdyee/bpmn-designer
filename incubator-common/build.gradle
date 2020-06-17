@@ -1,0 +1,13 @@
+setDescription("Incubator Projects Common Module")
+
+jar.enabled(true)
+
+dependencies {
+    compile(
+            'com.google.guava:guava',
+            'cglib:cglib',
+            'org.slf4j:slf4j-api',
+            "org.springframework:spring-web"
+    )
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
