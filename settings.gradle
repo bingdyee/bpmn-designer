@@ -1,0 +1,7 @@
+rootProject.name = 'incubator-hub'
+include 'incubator-common'
+include 'incubator-wazx'
+include 'incubator-wazx:wazx-uaa'
+include 'incubator-wazx:wazx-gateway'
+
+

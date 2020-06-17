@@ -1,0 +1,160 @@
+// https://start.spring.io/actuator/info
+plugins {
+    id "org.springframework.boot" version "2.2.8.RELEASE"
+    id "io.spring.dependency-management" version '1.0.9.RELEASE'
+    id "java"
+    id "idea"
+    id "maven"
+}
+
+ext {
+    set('springCloudVersion', 'Hoxton.SR1')
+    set('alibabaCloudVersion', '2.2.0.RELEASE')
+    set('springMybatisVersion', '2.1.0')
+    set('mysqlVersion', '8.0.12')
+    set('guavaVersion', '28.2-jre')
+    set('swaggerVersion', '2.9.2')
+    set('cglibVersion', '3.3.0')
+    set('fastjsonVersion', '1.2.58')
+    set('nettyVersion', '4.1.48.Final')
+    set('reflectAsmVersion', '1.11.9')
+    set('swaggerVersion', '2.9.2')
+    set('zxingVersion', '3.4.0')
+    set('dubboVersion', '2.7.4.1')
+    set('jolVersion', '0.10')
+    set('jedisVersion', '3.2.0')
+    set('redissonVersion', '3.12.4')
+    set('zkVersion', '3.5.7')
+    set('jmhVersion', '1.23')
+    set('jooqVersion', '3.13.2')
+    set('sfmJdbcVersion', '8.2.3')
+    set('springDataVersion', '2.3.0.RELEASE')
+    set('activitiVersion', '7.1.0.M6')
+    set('powermockVersion', '2.0.7')
+    set('shardingsphereVersion', '4.1.1')
+}
+
+configure(allprojects) { project ->
+    apply plugin: 'io.spring.dependency-management'
+
+    dependencyManagement {
+        resolutionStrategy {
+            cacheChangingModulesFor 0, "seconds"
+        }
+        applyMavenExclusions = false
+        generatedPomCustomization {
+            enabled = false
+        }
+        overriddenByDependencies = false
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:$alibabaCloudVersion"
+        }
+        dependencies {
+            dependency "org.mybatis.spring.boot:mybatis-spring-boot-starter:$springMybatisVersion"
+            dependency "mysql:mysql-connector-java:$mysqlVersion"
+            dependency "com.alibaba:fastjson:$fastjsonVersion"
+            dependency "io.springfox:springfox-swagger2:$swaggerVersion"
+            dependency "io.springfox:springfox-swagger-ui:$swaggerVersion"
+            dependency "io.netty:netty-all:$nettyVersion"
+            dependency "com.esotericsoftware:reflectasm:$reflectAsmVersion"
+            dependency "cglib:cglib:$cglibVersion"
+            dependency "com.google.guava:guava:$guavaVersion"
+            dependency "com.google.zxing:core:$zxingVersion"
+            dependency "com.google.zxing:javase:$zxingVersion"
+            dependency "org.apache.dubbo:dubbo-spring-boot-starter:$dubboVersion"
+            dependency "org.apache.dubbo:dubbo-dependencies-zookeeper:$dubboVersion"
+            dependency  "org.apache.dubbo:dubbo-serialization-kryo:$dubboVersion"
+            dependency "org.openjdk.jol:jol-core:$jolVersion"
+            dependency "org.redisson:redisson:$redissonVersion"
+            dependency "redis.clients:jedis:$jedisVersion"
+            dependency "org.apache.zookeeper:zookeeper:$zkVersion"
+            dependency "org.openjdk.jmh:jmh-core:$jmhVersion"
+            dependency "org.openjdk.jmh:jmh-generator-annprocess:$jmhVersion"
+            dependency "org.springframework.data:spring-data-commons:$springDataVersion"
+            dependency "org.jooq:jooq:$jooqVersion"
+            dependency "org.jooq:jooq-meta:$jooqVersion"
+            dependency "org.jooq:jooq-codegen:$jooqVersion"
+            dependency "org.simpleflatmapper:sfm-jdbc:$sfmJdbcVersion"
+            dependency "org.activiti:activiti-spring-boot-starter:$activitiVersion"
+            dependency "org.powermock:powermock-api-mockito2:$powermockVersion"
+            dependency "org.powermock:powermock-module-junit4:$powermockVersion"
+            dependency "org.apache.shardingsphere:sharding-jdbc-spring-boot-starter:$shardingsphereVersion"
+        }
+        resolutionStrategy {
+            cacheChangingModulesFor 0, "seconds"
+        }
+        applyMavenExclusions = false
+        generatedPomCustomization {
+            enabled = false
+        }
+        overriddenByDependencies = false
+        repositories {
+            mavenLocal()
+            maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+            mavenCentral()
+        }
+    }
+    configurations.all {
+        resolutionStrategy {
+            cacheChangingModulesFor 0, "seconds"
+            cacheDynamicVersionsFor 0, 'seconds'
+        }
+    }
+}
+
+configure(subprojects) { project ->
+    group 'io.incubator'
+    version '1.0.0.SNAPSHOT'
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'maven'
+    apply plugin: 'application'
+    apply plugin: 'org.springframework.boot'
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+
+    configurations {
+        provided
+        developmentOnly
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+        runtimeClasspath {
+            extendsFrom developmentOnly
+        }
+//        bug: gateway with undertow('org.springframework.boot:spring-boot-starter-undertow')
+//        implementation.exclude group:'org.springframework.boot', module:'spring-boot-starter-tomcat'
+        implementation.exclude group:'org.springframework.cloud', module:' spring-cloud-starter-netflix-hystrix'
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDirs 'src/main/java'
+            }
+            resources {
+                srcDir 'src/main/java'
+                srcDir 'src/main/resources'
+            }
+            compileClasspath += configurations.provided
+        }
+    }
+
+    uploadArchives {
+        repositories {
+            flatDir {
+                dirs 'repos'
+            }
+        }
+    }
+
+    artifacts {
+        archives distZip
+    }
+
+}
+
