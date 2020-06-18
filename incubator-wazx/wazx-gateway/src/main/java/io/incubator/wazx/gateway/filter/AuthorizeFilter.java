@@ -49,12 +49,12 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
             if (Strings.isNullOrEmpty(jwt)) {
                 return unauthorized(exchange, "invalid token");
             }
-            ServerHttpRequest newRequest = exchange
+            ServerHttpRequest modifiedRequest = exchange
                     .getRequest()
                     .mutate()
                     .headers(h -> h.set(AUTHORIZATION, BEARER_PREFIX + jwt))
                     .build();
-            ServerWebExchange modifiedExchange = exchange.mutate().request(newRequest).build();
+            ServerWebExchange modifiedExchange = exchange.mutate().request(modifiedRequest).build();
             return chain.filter(modifiedExchange);
         }
         return chain.filter(exchange);
