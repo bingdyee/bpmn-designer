@@ -3,5 +3,6 @@ include 'incubator-common'
 include 'incubator-wazx'
 include 'incubator-wazx:wazx-uaa'
 include 'incubator-wazx:wazx-gateway'
+include 'incubator-wazx:wazx-edge'
 
 

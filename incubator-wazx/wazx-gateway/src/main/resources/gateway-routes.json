@@ -1,3 +1,34 @@
-{
-
-}
+[
+    {
+        "id": "uaa-route",
+        "uri": "lb://incubator-wazx-uaa",
+        "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "/uaa/**"
+            }
+        }],
+        "filters": [{
+            "name": "StripPrefix",
+            "args": {
+                "_genkey_0": "1"
+            }
+        }]
+    },
+    {
+        "id": "edge-route",
+        "uri": "lb://incubator-wazx-edge",
+        "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "/api/**"
+            }
+        }],
+        "filters": [{
+            "name": "StripPrefix",
+            "args": {
+                "_genkey_0": "1"
+            }
+        }]
+    }
+]

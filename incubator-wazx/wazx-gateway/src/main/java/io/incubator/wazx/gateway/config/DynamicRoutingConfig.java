@@ -20,6 +20,7 @@ import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.Executor;
 
 /**
@@ -35,6 +36,8 @@ public class DynamicRoutingConfig implements ApplicationEventPublisherAware {
 
     @Value("${spring.cloud.nacos.discovery.server-addr}")
     private String serverAddr;
+    @Value("${spring.cloud.nacos.discovery.namespace}")
+    private String namespace;
 
     private static String ROUTES = "";
 
@@ -45,7 +48,10 @@ public class DynamicRoutingConfig implements ApplicationEventPublisherAware {
 
     @PostConstruct
     public void autoRefreshRouts() throws NacosException {
-        ConfigService configService = NacosFactory.createConfigService(serverAddr);
+        Properties properties = new Properties();
+        properties.put("serverAddr", serverAddr);
+        properties.put("namespace", namespace);
+        ConfigService configService = NacosFactory.createConfigService(properties);
         String routesConfig = configService.getConfig(DATA_ID, DEFAULT_GROUP, 5000);
         if (!Strings.isNullOrEmpty(routesConfig)) {
             refreshRouts(routesConfig);

@@ -1,5 +1,6 @@
 package io.incubator.common.pojo;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.http.HttpStatus;
 
 /**
@@ -91,11 +92,7 @@ public class ResponseEntity<T> {
 
     @Override
     public String toString() {
-        return "ResponseResult{" +
-                "code=" + code +
-                ", message='" + message + '\'' +
-                ", data=" + data +
-                '}';
+        return JSONObject.toJSONString(this);
     }
 
 }

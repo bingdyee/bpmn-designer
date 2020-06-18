@@ -9,4 +9,8 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
         namespace: d256961b-b317-403b-b93f-1210340b1327
+  redis:
+    host: localhost
+    port: 6379
+    password: foobared
 
