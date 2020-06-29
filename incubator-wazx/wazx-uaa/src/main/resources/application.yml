@@ -34,6 +34,7 @@ security:
   oauth2:
     authorization:
       jwt:
+        secretKey: s
         key-store: classpath:/wazx-jwt-store.jks
         key-alias: wazx-jwt
         key-password: bccfcsuknfxmecbh

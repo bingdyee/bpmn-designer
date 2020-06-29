@@ -4,5 +4,6 @@ include 'incubator-wazx'
 include 'incubator-wazx:wazx-uaa'
 include 'incubator-wazx:wazx-gateway'
 include 'incubator-wazx:wazx-edge'
-
+include 'incubator-wazx:wazx-oauth'
+findProject(':incubator-wazx:wazx-oauth')?.name = 'wazx-oauth'
 

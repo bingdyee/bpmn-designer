@@ -1,0 +1,8 @@
+dependencies {
+    implementation(
+            'org.springframework.boot:spring-boot-starter-web',
+            'org.springframework.cloud:spring-cloud-starter-oauth2',
+//            'io.jsonwebtoken:jjwt:0.9.1',
+            project(":incubator-common")
+    )
+}

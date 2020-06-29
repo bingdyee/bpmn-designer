@@ -1,33 +1,51 @@
+#server:
+#  port: 80
+#
+#spring:
+#  application:
+#    name: incubator-wazx-edge
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 127.0.0.1:8848
+#        namespace: d256961b-b317-403b-b93f-1210340b1327
+#
+#security:
+#  oauth2:
+#    client:
+#      clientId: edge_svc
+#      clientSecret: 52364771-2058-4ca8-9453-ae55b3e5c375
+#      accessTokenUri: http://127.0.0.1:8081/oauth/token
+#      grant-type: client_credentials
+#      scope: micro_svc
+#      resource-ids: account, journal
+#    resource:
+#      jwt:
+#        key-value: |
+#          -----BEGIN PUBLIC KEY-----
+#          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtINLmkEw3FFGJSO8CSDu
+#          Tr3A/Crwkh87NYA2yy2rTd35fiWURyFcb1MECNg80AXpcLKgk03b1t5aMH0JaPWu
+#          eZkVn/VPR8EY3J0a758CyvvalZmPb862Dk1SUObcd72pTMbV9nDg9VBaBxvtM2nL
+#          3y3/3rba+V4KODPr5ZI3y+XuPtRhTSF9eRUTSS9pLnyhXATlq/aK5QQEITjoh1d9
+#          ElvzU11qidtx/ZMceUaNWIlHZmUz1hk3m/X6zMwQUgsH0pvRxg7mBsMgWnhSz/4K
+#          Bi5UJEqRI9Re4ToAAQukMoYu1j+tjjaTcizZf59K6naxWybmniBuGvXate0MX5jG
+#          CwIDAQAB
+#          -----END PUBLIC KEY-----
+
 server:
-  port: 8082
+  port: 80
 
 spring:
   application:
     name: incubator-wazx-edge
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-        namespace: d256961b-b317-403b-b93f-1210340b1327
 
 security:
   oauth2:
     client:
-      clientId: edge_svc
-      clientSecret: 52364771-2058-4ca8-9453-ae55b3e5c375
-      accessTokenUri: http://127.0.0.1:8081/oauth/token
-      grant-type: client_credentials
-      scope: micro_svc
-      resource-ids: account, journal
+      clientId: client
+      clientSecret: secret
+      userAuthorizationUri: http://127.0.0.1:8083/oauth/authorize
+      accessTokenUri: http://127.0.0.1:8083/oauth/token
     resource:
       jwt:
-        key-value: |
-          -----BEGIN PUBLIC KEY-----
-          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtINLmkEw3FFGJSO8CSDu
-          Tr3A/Crwkh87NYA2yy2rTd35fiWURyFcb1MECNg80AXpcLKgk03b1t5aMH0JaPWu
-          eZkVn/VPR8EY3J0a758CyvvalZmPb862Dk1SUObcd72pTMbV9nDg9VBaBxvtM2nL
-          3y3/3rba+V4KODPr5ZI3y+XuPtRhTSF9eRUTSS9pLnyhXATlq/aK5QQEITjoh1d9
-          ElvzU11qidtx/ZMceUaNWIlHZmUz1hk3m/X6zMwQUgsH0pvRxg7mBsMgWnhSz/4K
-          Bi5UJEqRI9Re4ToAAQukMoYu1j+tjjaTcizZf59K6naxWybmniBuGvXate0MX5jG
-          CwIDAQAB
-          -----END PUBLIC KEY-----
+        key-uri: http://127.0.0.1:8083/oauth/token_key
