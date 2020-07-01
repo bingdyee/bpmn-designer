@@ -1,8 +1,11 @@
 package io.incubator.wazx.oauth.config;
 
+import io.incubator.wazx.oauth.security.CustomAuthenticationProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -65,4 +68,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable();
     }
 
+
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(myAuthenticationProvider());
+    }
+
+    @Bean(name="customAuthenticationProvider")
+    public AuthenticationProvider myAuthenticationProvider() {
+        CustomAuthenticationProvider daoAuthenticationProvider = new CustomAuthenticationProvider();
+        daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
+        return daoAuthenticationProvider;
+    }
 }
