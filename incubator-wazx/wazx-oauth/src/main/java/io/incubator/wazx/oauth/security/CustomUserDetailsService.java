@@ -1,11 +1,11 @@
 package io.incubator.wazx.oauth.security;
 
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import io.incubator.wazx.oauth.pojo.UserPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 /**
  * @author Noa Swartz
@@ -13,8 +13,24 @@ import java.util.Collections;
 @Service
 public class CustomUserDetailsService {
 
-    public UserDetails loadUserByUsername(String username, String userType) throws UsernameNotFoundException {
-        return new User("admin", "123456", Collections.EMPTY_SET);
+    public UserPrincipal loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserPrincipal principal = new UserPrincipal();
+        principal.setId(2L);
+        principal.setUsername("user");
+        principal.setStatus(1);
+        principal.setPassword("$2a$10$O.tMi2VaYPX/jXBY856CGOZAra6rsEujTID55RUwtj/Hikh1Mmuc2");
+        principal.setAuthorities(Arrays.asList(new SimpleGrantedAuthority("USER"), new SimpleGrantedAuthority("ADMIN")));
+        return principal;
+    }
+
+    public UserPrincipal loadMemberByUsername(String username) throws UsernameNotFoundException {
+        UserPrincipal principal = new UserPrincipal();
+        principal.setId(2L);
+        principal.setStatus(1);
+        principal.setUsername("member");
+        principal.setPassword("$2a$10$O.tMi2VaYPX/jXBY856CGOZAra6rsEujTID55RUwtj/Hikh1Mmuc2");
+        principal.setAuthorities(Arrays.asList(new SimpleGrantedAuthority("MEMBER"), new SimpleGrantedAuthority("USER")));
+        return principal;
     }
 
 }

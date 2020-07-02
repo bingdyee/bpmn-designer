@@ -1,20 +1,18 @@
 package io.incubator.wazx.oauth.config;
 
-import io.incubator.wazx.oauth.security.CustomAuthenticationProvider;
+import io.incubator.wazx.oauth.security.CustomUserDetailsService;
+import io.incubator.wazx.oauth.security.OAuth2AuthenticationProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 /**
  * @author Noa Swartz
@@ -25,19 +23,12 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    @Override
-    protected UserDetailsService userDetailsService(){
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        BCryptPasswordEncoder encoder = passwordEncoder();
-        manager.createUser(User.withUsername("admin").password(encoder.encode("123456")).authorities("ADMIN").build());
-        manager.createUser(User.withUsername("user").password(encoder.encode("123456")).authorities("USER").build());
-        return manager;
     }
 
     /**
@@ -60,7 +51,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 .anyRequest()
@@ -71,13 +62,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(myAuthenticationProvider());
+        auth.authenticationProvider(new OAuth2AuthenticationProvider(passwordEncoder(), customUserDetailsService));
     }
 
-    @Bean(name="customAuthenticationProvider")
-    public AuthenticationProvider myAuthenticationProvider() {
-        CustomAuthenticationProvider daoAuthenticationProvider = new CustomAuthenticationProvider();
-        daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
-        return daoAuthenticationProvider;
-    }
 }

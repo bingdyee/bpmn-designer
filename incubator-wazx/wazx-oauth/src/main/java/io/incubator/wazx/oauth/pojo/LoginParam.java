@@ -6,11 +6,11 @@ package io.incubator.wazx.oauth.pojo;
 public class LoginParam {
 
     private String username;
-    private String phone;
     private String password;
     private String code;
     private String codeId;
-    private String userType;
+    private String authCode;
+    private String loginFrom;
 
     public String getUsername() {
         return username;
@@ -18,14 +18,6 @@ public class LoginParam {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getPassword() {
@@ -52,11 +44,19 @@ public class LoginParam {
         this.codeId = codeId;
     }
 
-    public String getUserType() {
-        return userType;
+    public String getLoginFrom() {
+        return loginFrom;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setLoginFrom(String loginFrom) {
+        this.loginFrom = loginFrom;
+    }
+
+    public String getAuthCode() {
+        return authCode;
+    }
+
+    public void setAuthCode(String authCode) {
+        this.authCode = authCode;
     }
 }

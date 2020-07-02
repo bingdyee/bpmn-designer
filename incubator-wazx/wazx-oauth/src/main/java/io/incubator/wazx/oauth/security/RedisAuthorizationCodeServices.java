@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * @author : yubb
  * @date : 2019-08-20
  */
-@Service
+//@Service
 public class RedisAuthorizationCodeServices extends RandomValueAuthorizationCodeServices {
 
     @Autowired

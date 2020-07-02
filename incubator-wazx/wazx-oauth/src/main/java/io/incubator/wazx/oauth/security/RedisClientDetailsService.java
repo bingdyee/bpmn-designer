@@ -19,7 +19,7 @@ import java.util.List;
  * @author : yubb
  * @date : 2019-08-20
  */
-@Service
+//@Service
 public class RedisClientDetailsService extends JdbcClientDetailsService {
 
     /** client detail cache key，as hash */
