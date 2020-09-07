@@ -1,2 +1,2 @@
 # BPMN Designer
-Flowable BPMN 2.0 Designer.
+A web-based tool for designing BPMN 2.0 model.
