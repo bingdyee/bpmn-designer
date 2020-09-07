@@ -104,14 +104,14 @@ class BpmnJSModeler extends React.Component {
               <button onClick={() => this.saveXML()} >
                 <a href={this.state.xmlDownloadLink} download="diagram.bpmn">
                   Download BPMN
-                                </a>
+                </a>
               </button>
             </li>
             <li>
               <button onClick={() => this.saveSVG()} >
                 <a href={this.state.svgDownloadLink} download="diagram.svg">
                   Download SVG
-                                </a>
+                </a>
               </button>
             </li>
           </ul>
