@@ -1,0 +1,41 @@
+{
+  "name": "bpmn-designer",
+  "version": "1.0.0",
+  "description": "Flowable BPMN 2.0 Designer",
+  "repository": "https://github.com/vbintx/bpmn-designer.git",
+  "author": "Noa Swartz",
+  "license": "Apache-2.0",
+  "private": false,
+  "dependencies": {
+    "bpmn-js": "^7.3.0",
+    "bpmn-js-properties-panel": "^0.35.0",
+    "camunda-bpmn-moddle": "^4.4.0",
+    "diagram-js": "^6.7.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "react-scripts": "^3.4.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

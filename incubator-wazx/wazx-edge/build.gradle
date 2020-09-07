@@ -1,9 +1,0 @@
-setDescription("Edge Service")
-
-dependencies {
-    implementation(
-            'org.springframework.boot:spring-boot-starter-web',
-            'org.springframework.cloud:spring-cloud-starter-oauth2',
-            project(":incubator-common")
-    )
-}
